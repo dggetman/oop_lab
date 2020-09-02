@@ -7,6 +7,13 @@
     <groupId>ru.ssau.tk._emptiness_._practice_</groupId>
     <artifactId>_emptiness_._practice_</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <maven.compiler.target>14.0.2</maven.compiler.target>
+        <maven.compiler.source>14.0.2</maven.compiler.source>
+    </properties>
+
+    <dependencies>
+    </dependencies>
 
 
 </project>
