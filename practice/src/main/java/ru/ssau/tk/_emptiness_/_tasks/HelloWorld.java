@@ -1,4 +1,4 @@
-package ru.ssau.tk._emptiness_._first;
+package ru.ssau.tk._emptiness_._tasks;
 
 public class HelloWorld {
 
