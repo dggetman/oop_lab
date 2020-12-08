@@ -1,7 +1,7 @@
 package ru.ssau.tk._emptiness_._tasks;
 
 import org.testng.annotations.Test;
-import ru.ssau.tk._emptiness_._tasks.person.Person;
+import ru.ssau.tk._emptiness_._tasks.person.*;
 
 import static org.testng.Assert.*;
 
@@ -33,6 +33,8 @@ public class PersonTest {
     Person secondObj = new Person("Naruto", "Uzumaki");
     Person thirdObj = new Person(null, null, 88888888);
     Person fourthObj = new Person(88888888);
+    Person femaleObj = new Person(Gender.FEMALE);
+    Person nullObj = new Person(null, null, 123456);
 
     @Test
     public void testFirstNameMethods() {
@@ -59,5 +61,18 @@ public class PersonTest {
         assertEquals(firstObj.getPassportId(), 0);
         assertEquals(secondObj.getPassportId(), 77777777);
         assertEquals(fourthObj.getPassportId(), 99999999);
+    }
+
+    @Test
+    public void testSetGetGender() {
+        firstObj.setGender(Gender.MALE);
+        secondObj.setGender(Gender.FEMALE);
+        thirdObj.setGender(Gender.FEMALE);
+        assertEquals(firstObj.getGender(), Gender.MALE);
+        assertEquals(secondObj.getGender(), Gender.FEMALE);
+        assertNull(nullObj.getGender());
+        assertEquals(thirdObj.getGender(), Gender.FEMALE);
+        assertNull(fourthObj.getGender());
+        assertEquals(femaleObj.getGender(), Gender.FEMALE);
     }
 }
