@@ -26,7 +26,7 @@ public class PersonTest {
         assertEquals(firstObj.getPassportId(), 99997777, DELTA);
         assertEquals(secondObj.getPassportId(), 66661313, DELTA);
     }
-    //Task 1.11
+    //1.11 task
 
 
     Person firstObj = new Person();
