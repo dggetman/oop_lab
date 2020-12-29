@@ -7,4 +7,6 @@ public interface IActivationFunction {
         STEP, LINEAR, SIGMOID, HYPERTAN
     }
 
+    double derivative(double x);
+
 }

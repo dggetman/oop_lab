@@ -9,6 +9,12 @@ public class OutputLayer extends NeuralLayer {
         init();
     }
 
+    public OutputLayer(int numberOfNeurons, IActivationFunction iaf, NeuralLayer _previousLayer) {
+        super(numberOfNeurons, iaf);
+        setPreviousLayer(_previousLayer);
+        numberOfInputs = _previousLayer.getNumberOfNeuronsInLayer();
+    }
+
     @Override
     public void setNextLayer(NeuralLayer layer) {
         nextLayer = null;

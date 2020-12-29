@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class InputLayer extends NeuralLayer {
 
-    public InputLayer(int numberofinputs) {
-        super(numberofinputs, new Linear(1));
+    public InputLayer(int numberOfInputs) {
+        super(numberOfInputs, new Linear(1));
         previousLayer = null;
-        numberOfInputs = numberofinputs;
+        this.numberOfInputs = numberOfInputs;
         init();
     }
 

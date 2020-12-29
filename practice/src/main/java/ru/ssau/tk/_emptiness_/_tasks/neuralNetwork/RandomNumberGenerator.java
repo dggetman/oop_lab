@@ -1,6 +1,6 @@
 package ru.ssau.tk._emptiness_._tasks.neuralNetwork;
 
-import java.util.*;
+import java.util.Random;
 
 public class RandomNumberGenerator {
     public static long seed = 0;

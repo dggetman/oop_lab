@@ -1,5 +1,7 @@
 package ru.ssau.tk._emptiness_._tasks.neuralNetwork;
 
+import ru.ssau.tk._emptiness_._tasks.neuralNetwork.data.*;
+
 import java.util.ArrayList;
 
 public class NeuralNet {
@@ -7,17 +9,18 @@ public class NeuralNet {
     private ArrayList<HiddenLayer> hiddenLayer;
     private OutputLayer outputLayer;
     private final int numberOfHiddenLayers;
-    private final int numberOfInputs;
-    private final int numberOfOutputs;
+    private int numberOfInputs;
+    private int numberOfOutputs;
     private ArrayList<Double> input;
     private ArrayList<Double> output;
+    private boolean activeBias = true;
 
     public NeuralNet(int numberOfInputs, int numberOfOutputs,
                      int[] numberOfHiddenNeurons, IActivationFunction[] hiddenAcFnc,
                      IActivationFunction outputAcFnc) {
         numberOfHiddenLayers = numberOfHiddenNeurons.length;
-        this.numberOfInputs = numberOfInputs;
-        this.numberOfOutputs = numberOfOutputs;
+        numberOfInputs = numberOfInputs;
+        numberOfOutputs = numberOfOutputs;
         if (numberOfHiddenLayers == hiddenAcFnc.length) {
             input = new ArrayList<>(numberOfInputs);
             inputLayer = new InputLayer(numberOfInputs);
@@ -65,6 +68,11 @@ public class NeuralNet {
         }
     }
 
+    public NeuralNet(int numberOfInputs, int numberOfOutputs,
+                     IActivationFunction outputAcFnc) {
+        this(numberOfInputs, numberOfOutputs, new int[0], new IActivationFunction[0], outputAcFnc);
+    }
+
     public void setInputs(ArrayList<Double> inputs) {
         if (inputs.size() == numberOfInputs) {
             this.input = inputs;
@@ -81,6 +89,22 @@ public class NeuralNet {
                 }
             }
         }
+    }
+
+    public ArrayList<Double> getArrayInputs() {
+        return input;
+    }
+
+    public Double getInput(int i) {
+        return input.get(i);
+    }
+
+    public Double[] getInputs() {
+        Double[] result = new Double[numberOfInputs];
+        for (int i = 0; i < numberOfInputs; i++) {
+            result[i] = input.get(i);
+        }
+        return result;
     }
 
     public void calc() {
@@ -110,6 +134,10 @@ public class NeuralNet {
         return _outputs;
     }
 
+    public double getOutput(int i) {
+        return output.get(i);
+    }
+
     public void printNet() {
         System.out.println("Neural Network: " + this.toString());
         System.out.println("\tInputs:" + String.valueOf(this.numberOfInputs));
@@ -122,4 +150,65 @@ public class NeuralNet {
                             .numberOfNeuronsInLayer) + " Neurons");
         }
     }
+
+    public void setNeuralDataSet(NeuralDataSet _neuralDataSet) {
+        _neuralDataSet.neuralNet = this;
+    }
+
+    public int getNumberOfHiddenLayers() {
+        return numberOfHiddenLayers;
+    }
+
+    public int getNumberOfInputs() {
+        return numberOfInputs;
+    }
+
+    public int getNumberOfOutputs() {
+        return numberOfOutputs;
+    }
+
+    public InputLayer getInputLayer() {
+        return inputLayer;
+    }
+
+    public HiddenLayer getHiddenLayer(int i) {
+        return hiddenLayer.get(i);
+    }
+
+    public ArrayList<HiddenLayer> getHiddenLayers() {
+        return hiddenLayer;
+    }
+
+    public OutputLayer getOutputLayer() {
+        return outputLayer;
+    }
+
+    public void deactivateBias() {
+        if (numberOfHiddenLayers > 0) {
+            for (HiddenLayer hl : hiddenLayer) {
+                for (Neuron n : hl.getListOfNeurons()) {
+                    n.deactivateBias();
+                }
+            }
+        }
+        for (Neuron n : outputLayer.getListOfNeurons()) {
+            n.deactivateBias();
+        }
+    }
+
+    public void activateBias() {
+        for (HiddenLayer hl : hiddenLayer) {
+            for (Neuron n : hl.getListOfNeurons()) {
+                n.activateBias();
+            }
+        }
+        for (Neuron n : outputLayer.getListOfNeurons()) {
+            n.activateBias();
+        }
+    }
+
+    public boolean isBiasActive() {
+        return activeBias;
+    }
+
 }

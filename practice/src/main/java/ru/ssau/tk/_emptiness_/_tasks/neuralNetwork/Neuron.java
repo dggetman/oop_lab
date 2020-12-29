@@ -11,6 +11,9 @@ public class Neuron {
     protected Double bias = 1.0;
     private IActivationFunction activationFunction; //функция активации
 
+    public Neuron() {
+    }
+
     public Neuron(int numberOfInputs) {
         this.numberOfInputs = numberOfInputs;
         weight = new ArrayList<>(numberOfInputs + 1);
@@ -89,6 +92,14 @@ public class Neuron {
         return weights;
     }
 
+    public Double getWeight(int i) {
+        return weight.get(i);
+    }
+
+    public Double getBias() {
+        return weight.get(numberOfInputs);
+    }
+
     public ArrayList<Double> getArrayWeights() {
         return weight;
     }
@@ -127,11 +138,81 @@ public class Neuron {
         output = activationFunction.calc(outputBeforeActivation);
     }
 
+    public Double calc(ArrayList<Double> _input) {
+        Double _outputBeforeActivation = 0.0;
+        if (numberOfInputs > 0) {
+            if (weight != null) {
+                for (int i = 0; i <= numberOfInputs; i++) {
+                    _outputBeforeActivation += (i == numberOfInputs ? bias : _input.get(i)) * weight.get(i);
+                }
+            }
+        }
+        return activationFunction.calc(_outputBeforeActivation);
+    }
+
+    public Double calc(Double[] _input) {
+        Double _outputBeforeActivation = 0.0;
+        if (numberOfInputs > 0) {
+            if (weight != null) {
+                for (int i = 0; i <= numberOfInputs; i++) {
+                    _outputBeforeActivation += (i == numberOfInputs ? bias : _input[i]) * weight.get(i);
+                }
+            }
+        }
+        return activationFunction.calc(_outputBeforeActivation);
+    }
+
+    public Double derivative(Double[] _input) {
+        Double _outputBeforeActivation = 0.0;
+        if (numberOfInputs > 0) {
+            if (weight != null) {
+                for (int i = 0; i <= numberOfInputs; i++) {
+                    _outputBeforeActivation += (i == numberOfInputs ? bias : _input[i]) * weight.get(i);
+                }
+            }
+        }
+        return activationFunction.derivative(_outputBeforeActivation);
+    }
+
+    public ArrayList<Double> calcBatch(ArrayList<ArrayList<Double>> _input) {
+        ArrayList<Double> result = new ArrayList<>();
+        for (int i = 0; i < _input.size(); i++) {
+            result.add(0.0);
+            Double _outputBeforeActivation = 0.0;
+            for (int j = 0; j < numberOfInputs; j++) {
+                _outputBeforeActivation += (j == numberOfInputs ? bias : _input.get(i).get(j)) * weight.get(j);
+            }
+            result.set(i, activationFunction.calc(_outputBeforeActivation));
+        }
+        return result;
+    }
+
+    public ArrayList<Double> derivativeBatch(ArrayList<ArrayList<Double>> _input) {
+        ArrayList<Double> result = new ArrayList<>();
+        for (int i = 0; i < _input.size(); i++) {
+            result.add(0.0);
+            Double _outputBeforeActivation = 0.0;
+            for (int j = 0; j < numberOfInputs; j++) {
+                _outputBeforeActivation += (j == numberOfInputs ? bias : _input.get(i).get(j)) * weight.get(j);
+            }
+            result.set(i, activationFunction.derivative(_outputBeforeActivation));
+        }
+        return result;
+    }
+
     public void setActivationFunction(IActivationFunction iaf) {
         this.activationFunction = iaf;
     }
 
     public double getOutputBeforeActivation() {
         return outputBeforeActivation;
+    }
+
+    public void deactivateBias() {
+        this.bias = 0.0;
+    }
+
+    public void activateBias() {
+        this.bias = 1.0;
     }
 }

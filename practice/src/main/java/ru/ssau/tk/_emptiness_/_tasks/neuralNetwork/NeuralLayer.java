@@ -88,7 +88,7 @@ public abstract class NeuralLayer {
         return output;
     }
 
-    protected Neuron getNeuron(int i) {
+    public Neuron getNeuron(int i) {
         return neuron.get(i);
     }
 
@@ -98,6 +98,10 @@ public abstract class NeuralLayer {
         } catch (IndexOutOfBoundsException iobe) {
             this.neuron.add(_neuron);
         }
+    }
+
+    public Double getWeight(int i,int j){
+        return this.neuron.get(j).getWeight(i);
     }
 
 }
